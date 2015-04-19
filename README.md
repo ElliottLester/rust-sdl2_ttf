@@ -5,6 +5,8 @@ Rust-SDL2_ttf
 
 Rust bindings for SDL2_ttf.
 
+forked from [https://github.com/andelf/rust-sdl2_ttf.git](https://github.com/andelf/rust-sdl2_ttf.git)
+
 ## Overview
 
 Rust-SDL2_ttf is a library for talking to the new SDL2_ttf library from Rust.
@@ -22,21 +24,14 @@ Rust-SDL2_ttf uses the MIT licence.
 Place the following into your project's Cargo.toml file:
 
 ```toml
-[dependencies]
-sdl2_ttf = "0.0.31" # Doesn't work yet, needs to be published.
-```
-
-Or, to depend on the newest rust-sdl2_ttf, reference the repository:
-
-```toml
 [dependencies.sdl2_ttf]
-git = "https://github.com/andelf/rust-sdl2_ttf"
+git = "https://github.com/ElliottLester/rust-sdl2_ttf.git"
 ```
 
 You can also just clone and build the library yourself:
 
 ```bash
-git clone https://github.com/andelf/rust-sdl2_ttf
+git clone https://github.com/ElliottLester/rust-sdl2_ttf.git
 cd rust-sdl2_ttf
 cargo build
 # TODO: OR if you are using the mac framework version
@@ -46,7 +41,7 @@ rustc -L. --cfg mac_framework src/sdl2_ttf/lib.rs
 If you're not using Cargo, you can compile the library manually:
 
 ```bash
-git clone https://github.com/andelf/rust-sdl2_ttf
+git clone https://github.com/ElliottLester/rust-sdl2_ttf.git
 cd rust-sdl2_ttf
 rustc src/sdl2_ttf/lib.rs
 ```
