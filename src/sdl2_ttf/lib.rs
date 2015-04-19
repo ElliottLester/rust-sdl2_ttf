@@ -18,6 +18,7 @@ use libc::{c_int, c_long};
 use std::ffi::{CString, CStr};
 use std::num::FromPrimitive;
 use std::path::Path;
+use std::ptr;
 use sdl2::surface::Surface;
 use sdl2::get_error;
 use sdl2::pixels;
@@ -59,11 +60,11 @@ fn color_to_c_color(color: Color) -> SDL_Color {
 /// Font Style
 bitflags! {
     flags FontStyle : c_int {
-    const StyleNormal = ffi::TTF_STYLE_NORMAL,
-    const StyleBold   = ffi::TTF_STYLE_BOLD,
-    const StyleItalic = ffi::TTF_STYLE_ITALIC,
-    const StyleUnderline = ffi::TTF_STYLE_UNDERLINE,
-    const StyleStrikeThrough = ffi::TTF_STYLE_STRIKETHROUGH,
+    const STYLENORMAL = ffi::TTF_STYLE_NORMAL,
+    const STYLEBOLD   = ffi::TTF_STYLE_BOLD,
+    const STYLEITALIC = ffi::TTF_STYLE_ITALIC,
+    const STYLEUNDERLINE = ffi::TTF_STYLE_UNDERLINE,
+    const STYLESTRIKETHROUGH = ffi::TTF_STYLE_STRIKETHROUGH,
     }
 }
 
@@ -358,10 +359,10 @@ impl Font {
         unsafe {
             let ctext = CString::new(text).unwrap().as_ptr();
             let raw = ffi::TTF_RenderText_Solid(self.raw, ctext, color_to_c_color(fg));
-            if raw.is_null() {
+            if raw == ptr::null_mut() {
                 Err(get_error())
             } else {
-                Ok(Surface::from_ll(raw, true))
+                Ok(Surface::from_ll(raw,true))
             }
         }
     }
