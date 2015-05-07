@@ -7,6 +7,7 @@ A binding for SDL2_ttf.
 
 #![crate_type = "lib"]
 
+extern crate num;
 extern crate libc;
 extern crate sdl2;
 extern crate sdl2_sys as sdl2_sys;
@@ -16,7 +17,7 @@ extern crate bitflags;
 
 use libc::{c_int, c_long};
 use std::ffi::{CString, CStr};
-use std::num::FromPrimitive;
+use num::FromPrimitive;
 use std::path::Path;
 use std::ptr;
 use sdl2::surface::Surface;
@@ -68,12 +69,30 @@ bitflags! {
     }
 }
 
-#[derive(Debug, PartialEq, FromPrimitive)]
+#[derive(Debug, PartialEq)]
 pub enum Hinting {
     HintingNormal = ffi::TTF_HINTING_NORMAL as isize,
     HintingLight  = ffi::TTF_HINTING_LIGHT  as isize,
     HintingMono   = ffi::TTF_HINTING_MONO   as isize,
     HintingNone   = ffi::TTF_HINTING_NONE   as isize
+}
+
+impl FromPrimitive for Hinting {
+    fn from_i64(n: i64) -> Option<Hinting> {
+        use self::Hinting::*;
+
+        Some(match n as i32 {
+            ffi::TTF_HINTING_NORMAL => HintingNormal,
+            ffi::TTF_HINTING_LIGHT  => HintingLight,
+            ffi::TTF_HINTING_MONO   => HintingMono,
+            ffi::TTF_HINTING_NONE   => HintingNone,
+            _ => return None,
+        })
+    }
+
+    fn from_u64(n: u64) -> Option<Hinting> {
+        FromPrimitive::from_i64(n as i64)
+    }
 }
 
 /// Glyph Metrics
